@@ -1,6 +1,10 @@
-import OfferCard from './OfferCard';
+import OfferCard from './offer-card';
 
-function MainScreen(): JSX.Element {
+interface MainScreenProps {
+  offersCount: number;
+}
+
+function MainScreen({ offersCount }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -81,7 +85,7 @@ function MainScreen(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offersCount} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -113,8 +117,6 @@ function MainScreen(): JSX.Element {
                   title="Beautiful & luxurious apartment at great location"
                   type="Apartment"
                   isBookmarked={false}
-                  // isPremium
-                  // rating={80}
                 />
                 <OfferCard
                   image="img/room.jpg"
@@ -122,7 +124,6 @@ function MainScreen(): JSX.Element {
                   title="Wood and stone place"
                   type="Room"
                   isBookmarked
-                  // rating={80}
                 />
                 <OfferCard
                   image="img/apartment-02.jpg"
@@ -130,7 +131,6 @@ function MainScreen(): JSX.Element {
                   title="Canal View Prinsengracht"
                   type="Apartment"
                   isBookmarked={false}
-                  // rating={80}
                 />
                 <OfferCard
                   image="img/apartment-03.jpg"
@@ -138,8 +138,6 @@ function MainScreen(): JSX.Element {
                   title="Nice, cozy, warm big bed apartment"
                   type="Apartment"
                   isBookmarked={false}
-                  // isPremium
-                  // rating={100}
                 />
                 <OfferCard
                   image="img/room.jpg"
@@ -147,7 +145,6 @@ function MainScreen(): JSX.Element {
                   title="Wood and stone place"
                   type="Room"
                   isBookmarked
-                  // rating={80}
                 />
               </div>
             </section>
