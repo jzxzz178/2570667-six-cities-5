@@ -1,4 +1,4 @@
-import MainScreen from '../home-component/main-screen';
+import MainScreen from '../main-screen-component/main-screen';
 
 interface AppProps {
     offersCount: number; // Количество предложений передаётся как пропс
