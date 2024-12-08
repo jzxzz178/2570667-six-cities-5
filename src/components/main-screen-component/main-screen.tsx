@@ -1,10 +1,12 @@
-import OfferCard from './offer-card';
+import { Offer } from '../../mocks/offers';
+import OfferCard from '../offer-component/offer-card';
 
 interface MainScreenProps {
   offersCount: number;
+  offers: Offer[];
 }
 
-function MainScreen({ offersCount }: MainScreenProps): JSX.Element {
+function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -110,42 +112,21 @@ function MainScreen({ offersCount }: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {/* Здесь будут рендериться карточки мест */}
-                <OfferCard
-                  image="img/apartment-01.jpg"
-                  price={120}
-                  title="Beautiful & luxurious apartment at great location"
-                  type="Apartment"
-                  isBookmarked={false}
-                />
-                <OfferCard
-                  image="img/room.jpg"
-                  price={80}
-                  title="Wood and stone place"
-                  type="Room"
-                  isBookmarked
-                />
-                <OfferCard
-                  image="img/apartment-02.jpg"
-                  price={132}
-                  title="Canal View Prinsengracht"
-                  type="Apartment"
-                  isBookmarked={false}
-                />
-                <OfferCard
-                  image="img/apartment-03.jpg"
-                  price={180}
-                  title="Nice, cozy, warm big bed apartment"
-                  type="Apartment"
-                  isBookmarked={false}
-                />
-                <OfferCard
-                  image="img/room.jpg"
-                  price={80}
-                  title="Wood and stone place"
-                  type="Room"
-                  isBookmarked
-                />
+                {/* Динамическая отрисовка карточек предложений */}
+                {offers.map((offer) => (
+                  <OfferCard
+                    key={offer.id}
+                    isPremium={offer.isPremium}
+                    image={offer.image}
+                    price={offer.price}
+                    title={offer.title}
+                    type={offer.type}
+                    isBookmarked={offer.isBookmarked}
+                    rating={offer.rating}
+                    onMouseEnter={() => {}}
+                    onMouseLeave={() => {}}
+                  />
+                ))}
               </div>
             </section>
             <div className="cities__right-section">

@@ -5,18 +5,20 @@ import Login from '../components/login-component/login';
 import Favorites from '../components/favorites-component/favorites';
 import Offer from '../components/offer-component/offer';
 import PrivateRoute from '../components/private-route';
+import { Offer as OfferType } from '../mocks/offers';
 
 interface AppProps {
     offersCount: number; // Количество предложений передаётся как пропс
+    offers: OfferType[];
   }
 
-function App({ offersCount }: AppProps): JSX.Element {
+function App({ offersCount, offers }: AppProps): JSX.Element {
   const isAuthenticated = false;
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainScreen offersCount={offersCount} />} />
+        <Route path="/" element={<MainScreen offersCount={offersCount} offers={offers}/>} />
         <Route path="/login" element={<Login />} />
 
         <Route

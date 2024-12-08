@@ -1,23 +1,31 @@
 interface OfferCardProps {
-    // isPremium: boolean;
-    image: string;
-    price: number;
-    title: string;
-    type: string;
-    isBookmarked: boolean;
-    // rating: number;
+  isPremium: boolean;
+  image: string;
+  price: number;
+  title: string;
+  type: string;
+  isBookmarked: boolean;
+  rating: number;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 function OfferCard(props: OfferCardProps): JSX.Element {
   return (
     <div>
-      <article className="cities__card place-card">
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
+      <article
+        className="cities__card place-card"
+        onMouseEnter={props.onMouseEnter}
+        onMouseLeave={props.onMouseLeave}
+      >
+        {props.isPremium && (
+          <div className="place-card__mark">
+            <span>Premium</span>
+          </div>
+        )}
         <div className="cities__image-wrapper place-card__image-wrapper">
           <a href="#">
-            <img className="place-card__image" src={props.image} width="260" height="200" alt="Place image"/>
+            <img className="place-card__image" src={props.image} width="260" height="200" alt="Place image" />
           </a>
         </div>
         <div className="place-card__info">
@@ -35,7 +43,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">
-              <span style={{width: '80%'}}></span>
+              <span style={{ width: `${(props.rating / 5) * 100}%` }}></span>
               <span className="visually-hidden">Rating</span>
             </div>
           </div>
