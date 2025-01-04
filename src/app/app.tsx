@@ -13,7 +13,7 @@ interface AppProps {
   }
 
 function App({ offersCount, offers }: AppProps): JSX.Element {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   return (
     <Router>
@@ -25,7 +25,7 @@ function App({ offersCount, offers }: AppProps): JSX.Element {
           path="/favorites"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <Favorites />
+              <Favorites offers={offers} />
             </PrivateRoute>
           }
         />

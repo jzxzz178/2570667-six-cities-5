@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import OfferCard from './offer-card';
 
 interface Offer {
@@ -17,7 +17,7 @@ interface OffersListProps {
 }
 
 function OffersList({ offers }: OffersListProps): JSX.Element {
-  const [activeOfferId, setActiveOfferId] = useState<number | null>(null);
+  const [, setActiveOfferId] = useState<number | null>(null);
 
   const handleMouseEnter = (id: number) => {
     setActiveOfferId(id);
