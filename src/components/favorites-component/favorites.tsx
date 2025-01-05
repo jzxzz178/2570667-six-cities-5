@@ -49,6 +49,7 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                 <li key={offer.id} className="favorites__locations-items">
                   <div className="favorites__places">
                     <OfferCard
+                      id={offer.id}
                       image={offer.image}
                       price={offer.price}
                       title={offer.title}

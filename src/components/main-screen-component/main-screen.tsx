@@ -116,6 +116,7 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
                 {offers.map((offer) => (
                   <OfferCard
                     key={offer.id}
+                    id={offer.id}
                     isPremium={offer.isPremium}
                     image={offer.image}
                     price={offer.price}

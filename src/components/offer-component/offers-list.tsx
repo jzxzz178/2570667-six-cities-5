@@ -32,6 +32,7 @@ function OffersList({ offers }: OffersListProps): JSX.Element {
       {offers.map((offer) => (
         <OfferCard
           key={offer.id}
+          id={offer.id}
           isPremium={offer.isPremium}
           image={offer.image}
           price={offer.price}
