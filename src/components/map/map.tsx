@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import { Offer } from '../../mocks/offers';
+import 'leaflet/dist/leaflet.css';
 
 interface MapProps {
   offers: Offer[];
@@ -41,7 +42,7 @@ const Map: React.FC<MapProps> = ({ offers }) => {
     <div
       className="map"
       ref={mapRef}
-      style={{ height: '500px', width: '100%' }}
+      style={{ height: '700px', width: '110%' }}
     >
     </div>
   );
