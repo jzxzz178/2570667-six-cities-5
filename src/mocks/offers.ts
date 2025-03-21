@@ -11,6 +11,10 @@ const offers: Offer[] = [
     description: 'A beautiful apartment located in the city center with all amenities.',
     onMouseEnter: () => {},
     onMouseLeave: () => {},
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+    },
   },
   {
     id: 2,
@@ -24,6 +28,10 @@ const offers: Offer[] = [
     description: 'A cozy room made of wood and stone with a rustic feel.',
     onMouseEnter: () => {},
     onMouseLeave: () => {},
+    location: {
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
+    },
   },
   {
     id: 3,
@@ -37,6 +45,10 @@ const offers: Offer[] = [
     description: 'An apartment with a stunning view of the Prinsengracht canal.',
     onMouseEnter: () => {},
     onMouseLeave: () => {},
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+    },
   },
   {
     id: 4,
@@ -50,6 +62,10 @@ const offers: Offer[] = [
     description: 'A warm and cozy apartment with a large bed, perfect for relaxation.',
     onMouseEnter: () => {},
     onMouseLeave: () => {},
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+    },
   },
 ];
 
@@ -66,4 +82,8 @@ export interface Offer {
     description: string;
     onMouseEnter: () => void;
     onMouseLeave: () => void;
+    location: {
+      latitude: number;
+      longitude: number;
+    };
 }

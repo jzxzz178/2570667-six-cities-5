@@ -6,6 +6,7 @@ import Favorites from '../components/favorites-component/favorites';
 import Offer from '../components/offer-component/offer';
 import PrivateRoute from '../components/private-route';
 import { Offer as OfferType } from '../mocks/offers';
+// import Header from '../components/header';
 
 interface AppProps {
     offersCount: number; // Количество предложений передаётся как пропс
@@ -20,6 +21,7 @@ function App({ offersCount, offers }: AppProps): JSX.Element {
       <Routes>
         <Route path="/" element={<MainScreen offersCount={offersCount} offers={offers}/>} />
         <Route path="/login" element={<Login />} />
+        {/* <Route path="/header" element={<Header isAuthenticated userEmail='user@mail.com' favoriteCount={1}/>}/> */}
 
         <Route
           path="/favorites"

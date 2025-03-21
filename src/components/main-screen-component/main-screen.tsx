@@ -1,5 +1,6 @@
 import { Offer } from '../../mocks/offers';
 import OfferCard from '../offer-component/offer-card';
+import Map from '../map/map';
 
 interface MainScreenProps {
   offersCount: number;
@@ -131,7 +132,8 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              {/* Отображаем компонент карты */}
+              <Map offers={offers} />
             </div>
           </div>
         </div>
