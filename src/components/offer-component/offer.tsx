@@ -1,6 +1,44 @@
+import ReviewsList from '../../review-components/review-list';
 import CommentForm from '../comment-form-component/comment-form';
+import offers from '../../mocks/offers';
+import Map from '../map/map';
+import { useParams } from 'react-router-dom';
+import OffersList from './offers-list';
+
+const sampleReviews = [
+  {
+    avatar: 'img/avatar-max.jpg',
+    userName: 'Max',
+    rating: 80, // 80% для 4 из 5 звёзд (округлённо)
+    text: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
+    date: new Date('2019-04-24'),
+  },
+  {
+    avatar: 'img/avatar-angelina.jpg',
+    userName: 'Angelina',
+    rating: 60,
+    text: 'норм.',
+    date: new Date('2019-05-15'),
+  },
+];
 
 function Offer(): JSX.Element {
+  const { id } = useParams<{ id: string }>();
+
+  const offerId = Number(id);
+
+  const selectedOffer = offers.find(
+    (offer: { id: number }) => offer.id === offerId
+  );
+
+  const nearbyOffers = offers.filter(
+    (offer: { id: number }) => offer.id !== offerId
+  );
+
+  if (!selectedOffer) {
+    return <div>Offer not found</div>;
+  }
+
   return (
     <div className="page">
       <header className="header">
@@ -99,15 +137,8 @@ function Offer(): JSX.Element {
                 <h1 className="offer__name">
                   Beautiful &amp; luxurious studio at great location
                 </h1>
-                <button
-                  className="offer__bookmark-button button"
-                  type="button"
-                >
-                  <svg
-                    className="offer__bookmark-icon"
-                    width="31"
-                    height="33"
-                  >
+                <button className="offer__bookmark-button button" type="button">
+                  <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -138,36 +169,16 @@ function Offer(): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  <li className="offer__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="offer__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Towels
-                  </li>
-                  <li className="offer__inside-item">
-                    Heating
-                  </li>
-                  <li className="offer__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="offer__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="offer__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="offer__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="offer__inside-item">
-                    Fridge
-                  </li>
+                  <li className="offer__inside-item">Wi-Fi</li>
+                  <li className="offer__inside-item">Washing machine</li>
+                  <li className="offer__inside-item">Towels</li>
+                  <li className="offer__inside-item">Heating</li>
+                  <li className="offer__inside-item">Coffee machine</li>
+                  <li className="offer__inside-item">Baby seat</li>
+                  <li className="offer__inside-item">Kitchen</li>
+                  <li className="offer__inside-item">Dishwasher</li>
+                  <li className="offer__inside-item">Cabel TV</li>
+                  <li className="offer__inside-item">Fridge</li>
                 </ul>
               </div>
               <div className="offer__host">
@@ -189,7 +200,7 @@ function Offer(): JSX.Element {
                   <p className="offer__text">
                     A quiet cozy and picturesque that hides behind a a river by
                     the unique lightness of Amsterdam. The building is green and
-                    from the 18th century.
+                    from 18th century.
                   </p>
                   <p className="offer__text">
                     An independent House, strategically located between Rembrand
@@ -198,50 +209,33 @@ function Offer(): JSX.Element {
                   </p>
                 </div>
               </div>
-              <section className="offer__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews &middot; <span className="reviews__amount">1</span>
-                </h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar"
-                          src="img/avatar-max.jpg"
-                          width="54"
-                          height="54"
-                          alt="Reviews avatar"
-                        />
-                      </div>
-                      <span className="reviews__user-name">Max</span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{ width: '80%' }}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a river
-                        by the unique lightness of Amsterdam.
-                      </p>
-                      <time
-                        className="reviews__time"
-                        dateTime="2019-04-24"
-                      >
-                        April 2019
-                      </time>
-                    </div>
-                  </li>
-                </ul>
-                {/* Включение компонента CommentForm */}
-                <CommentForm />
-              </section>
+              {/* Заменяем статичный список отзывов на компонент ReviewsList */}
+              <ReviewsList reviews={sampleReviews} />
+              {/* Форма отправки комментария */}
+              <CommentForm />
             </div>
           </div>
-          <section className="offer__map map"></section>
+
+          <section className="near-places places">
+            <h2 className="near-places__title">
+              Other places in the neighbourhood
+            </h2>
+            <div className="near-places__list places__list">
+              <OffersList offers={nearbyOffers} containerClassName="near-places__list" />
+            </div>
+          </section>
+
+          <div
+            className="offer__map map"
+            style={{
+              width: '100%',
+              maxWidth: '600px',
+              height: '400px',
+              margin: '0 auto',
+            }}
+          >
+            <Map offers={nearbyOffers} />
+          </div>
         </section>
       </main>
     </div>

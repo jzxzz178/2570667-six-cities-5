@@ -1,10 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
-import { Offer } from '../../mocks/offers';
 import 'leaflet/dist/leaflet.css';
 
+export interface MapOffer {
+  title: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
 interface MapProps {
-  offers: Offer[];
+  offers: MapOffer[];
 }
 
 const Map: React.FC<MapProps> = ({ offers }) => {
