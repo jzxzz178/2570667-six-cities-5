@@ -3,6 +3,7 @@ import CommentForm from '../comment-form-component/comment-form';
 import offers from '../../mocks/offers';
 import Map from '../map/map';
 import { useParams } from 'react-router-dom';
+import OffersList from './offers-list';
 
 const sampleReviews = [
   {
@@ -214,6 +215,16 @@ function Offer(): JSX.Element {
               <CommentForm />
             </div>
           </div>
+
+          <section className="near-places places">
+            <h2 className="near-places__title">
+              Other places in the neighbourhood
+            </h2>
+            <div className="near-places__list places__list">
+              <OffersList offers={nearbyOffers} containerClassName="near-places__list" />
+            </div>
+          </section>
+
           <div
             className="offer__map map"
             style={{

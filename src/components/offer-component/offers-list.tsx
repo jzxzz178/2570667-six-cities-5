@@ -14,9 +14,10 @@ interface Offer {
 
 interface OffersListProps {
   offers: Offer[];
+  containerClassName?: string;
 }
 
-function OffersList({ offers }: OffersListProps): JSX.Element {
+function OffersList({ offers, containerClassName }: OffersListProps): JSX.Element {
   const [, setActiveOfferId] = useState<number | null>(null);
 
   const handleMouseEnter = (id: number) => {
@@ -28,7 +29,7 @@ function OffersList({ offers }: OffersListProps): JSX.Element {
   };
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={`cities__places-list places__list tabs__content ${containerClassName}`}>
       {offers.map((offer) => (
         <OfferCard
           key={offer.id}
