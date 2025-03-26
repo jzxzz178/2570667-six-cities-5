@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import OfferCard from './offer-card';
+import { Offer } from '../../mocks/offers';
 
-interface Offer {
-  id: number;
-  isPremium: boolean;
-  image: string;
-  price: number;
-  title: string;
-  type: string;
-  isBookmarked: boolean;
-  rating: number;
-}
+// interface Offer {
+//   id: number;
+//   isPremium: boolean;
+//   image: string;
+//   price: number;
+//   title: string;
+//   type: string;
+//   isBookmarked: boolean;
+//   rating: number;
+// }
 
 interface OffersListProps {
   offers: Offer[];

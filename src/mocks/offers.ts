@@ -1,3 +1,5 @@
+import { cities, City } from './cities';
+
 const offers: Offer[] = [
   {
     id: 1,
@@ -6,6 +8,7 @@ const offers: Offer[] = [
     type: 'Apartment',
     isPremium: true,
     isBookmarked: false,
+    city: cities[3],
     rating: 4.5,
     image: 'img/apartment-01.jpg',
     description: 'A beautiful apartment located in the city center with all amenities.',
@@ -23,6 +26,7 @@ const offers: Offer[] = [
     type: 'Room',
     isPremium: false,
     isBookmarked: true,
+    city: cities[3],
     rating: 4.0,
     image: 'img/apartment-01.jpg',
     description: 'A cozy room made of wood and stone with a rustic feel.',
@@ -40,6 +44,7 @@ const offers: Offer[] = [
     type: 'Apartment',
     isPremium: false,
     isBookmarked: false,
+    city: cities[3],
     rating: 4.8,
     image: 'img/apartment-01.jpg',
     description: 'An apartment with a stunning view of the Prinsengracht canal.',
@@ -57,6 +62,7 @@ const offers: Offer[] = [
     type: 'Apartment',
     isPremium: true,
     isBookmarked: false,
+    city: cities[3],
     rating: 5.0,
     image: 'img/apartment-01.jpg',
     description: 'A warm and cozy apartment with a large bed, perfect for relaxation.',
@@ -75,6 +81,7 @@ export interface Offer {
     title: string;
     price: number;
     type: string;
+    city: City;
     isPremium: boolean;
     isBookmarked: boolean;
     rating: number;

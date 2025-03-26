@@ -1,28 +1,28 @@
 interface Review {
   id: number;
-  offerId: number; // Связывает отзыв с конкретным предложением
+  offerId: number;
   userId: number;
   rating: number;
-  comment: string;
-  date: string;
+  text: string;
+  date: Date;
 }
 
 const reviews: Review[] = [
   {
     id: 1,
     offerId: 1,
-    userId: 101,
-    rating: 5,
-    comment: 'Amazing place! Loved every bit of it.',
-    date: '2023-10-12',
+    userId: 1,
+    rating: 80,
+    text: 'Amazing place! Loved every bit of it.',
+    date: new Date('2019-04-24'),
   },
   {
     id: 2,
     offerId: 1,
-    userId: 102,
-    rating: 4,
-    comment: 'Very nice apartment, close to everything.',
-    date: '2023-10-15',
+    userId: 2,
+    rating: 60,
+    text: 'Very nice apartment, close to everything.',
+    date: new Date('2019-05-15'),
   },
 ];
 
