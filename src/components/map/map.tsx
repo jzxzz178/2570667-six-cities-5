@@ -1,23 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { useSelector } from 'react-redux';
 import { State } from '../../types/store';
 import { cities } from '../../mocks/cities';
-
-export interface MapOffer {
-  title: string;
-  location: {
-    latitude: number;
-    longitude: number;
-  };
-}
+import { Offer } from '../../mocks/offers';
 
 interface MapProps {
-  offers: MapOffer[];
+  offers: Offer[];
+  activeOfferId: number | null;
 }
 
-const Map: React.FC<MapProps> = ({ offers }) => {
+const Map: React.FC<MapProps> = ({ offers, activeOfferId }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const selectedCity = useSelector((state: State) => state.app.city);
   const cutyEntity = cities.find((c) => c.name === selectedCity);
@@ -28,7 +22,9 @@ const Map: React.FC<MapProps> = ({ offers }) => {
     }
 
     const map = L.map(mapRef.current, {
-      center: cutyEntity ? [cutyEntity.location.latitude, cutyEntity.location.longitude] : [52.38333, 4.9],
+      center: cutyEntity
+        ? [cutyEntity.location.latitude, cutyEntity.location.longitude]
+        : [52.38333, 4.9],
       zoom: cutyEntity ? cutyEntity.location.zoom : 4,
       layers: [
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -38,14 +34,24 @@ const Map: React.FC<MapProps> = ({ offers }) => {
     });
 
     offers.forEach((offer) => {
+      const iconUrl =
+        offer.id === activeOfferId ? 'img/pin-active.svg' : 'img/pin.svg';
+
+      const icon = L.icon({
+        iconUrl,
+        iconSize: [30, 30],
+      });
+
       const { latitude, longitude } = offer.location;
-      L.marker([latitude, longitude]).addTo(map).bindPopup(offer.title);
+      L.marker([latitude, longitude], { icon })
+        .addTo(map)
+        .bindPopup(offer.title);
     });
 
     return () => {
       map.remove();
     };
-  }, [cutyEntity, offers]);
+  }, [activeOfferId, cutyEntity, offers]);
 
   return (
     <div
