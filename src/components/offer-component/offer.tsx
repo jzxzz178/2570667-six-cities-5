@@ -1,4 +1,4 @@
-import ReviewsList from '../../review-components/review-list';
+import ReviewsList from '../review-components/review-list';
 import CommentForm from '../comment-form-component/comment-form';
 import offers from '../../mocks/offers';
 import Map from '../map/map';
