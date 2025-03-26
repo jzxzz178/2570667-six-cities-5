@@ -28,7 +28,7 @@ const Review: React.FC<ReviewProps> = ({ avatar, userName, rating, text, date })
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{ width: `${rating}%` }}></span>
+            <span style={{ width: `${rating / 5 * 100}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -6,6 +6,7 @@ import OffersList from './offers-list';
 import reviews from '../../mocks/reviews';
 import users from '../../mocks/user';
 import { useAppSelector } from '../../hooks';
+import { useState } from 'react';
 
 function Offer(): JSX.Element {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +15,8 @@ function Offer(): JSX.Element {
 
   const selectedOffer = allOffers.find((item) => item.id === offerId);
   const nearbyOffers = allOffers.filter((item) => item.id !== offerId);
+
+  const [activeOfferId] = useState<number | null>(null);
 
   if (!selectedOffer) {
     return <div>Offer not found</div>;
@@ -225,7 +228,7 @@ function Offer(): JSX.Element {
               margin: '0 auto',
             }}
           >
-            <Map offers={nearbyOffers} />
+            <Map offers={nearbyOffers} activeOfferId={activeOfferId}/>
           </div>
         </section>
       </main>
