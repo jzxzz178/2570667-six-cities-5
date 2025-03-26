@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useSelector } from 'react-redux';
 import { State } from '../../types/store';
 import { cities } from '../../mocks/cities';
 import { Offer } from '../../mocks/offers';
+import { useAppSelector } from '../../hooks';
 
 interface MapProps {
   offers: Offer[];
@@ -13,8 +13,8 @@ interface MapProps {
 
 const Map: React.FC<MapProps> = ({ offers, activeOfferId }) => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const selectedCity = useSelector((state: State) => state.app.city);
-  const cutyEntity = cities.find((c) => c.name === selectedCity);
+  const selectedCity = useAppSelector((state: State) => state.app.city);
+  const cityEntity = cities.find((c) => c.name === selectedCity);
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -22,10 +22,10 @@ const Map: React.FC<MapProps> = ({ offers, activeOfferId }) => {
     }
 
     const map = L.map(mapRef.current, {
-      center: cutyEntity
-        ? [cutyEntity.location.latitude, cutyEntity.location.longitude]
+      center: cityEntity
+        ? [cityEntity.location.latitude, cityEntity.location.longitude]
         : [52.38333, 4.9],
-      zoom: cutyEntity ? cutyEntity.location.zoom : 4,
+      zoom: cityEntity ? cityEntity.location.zoom : 4,
       layers: [
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; OpenStreetMap contributors',
@@ -51,7 +51,7 @@ const Map: React.FC<MapProps> = ({ offers, activeOfferId }) => {
     return () => {
       map.remove();
     };
-  }, [activeOfferId, cutyEntity, offers]);
+  }, [activeOfferId, cityEntity, offers]);
 
   return (
     <div
