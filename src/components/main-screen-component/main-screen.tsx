@@ -1,13 +1,12 @@
-import { Offer } from '../../mocks/offers';
 import OfferCard from '../offer-component/offer-card';
 import Map from '../map/map';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { State } from '../../types/store';
 
-interface MainScreenProps {
-  offersCount: number;
-  offers: Offer[];
-}
+function MainScreen(): JSX.Element {
+  const city = useSelector((state: State) => state.app.city);
+  const offers = useSelector((state: State) => state.app.offers);
 
-function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -88,7 +87,7 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in {city}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>

@@ -1,39 +1,19 @@
 import ReviewsList from '../review-components/review-list';
 import CommentForm from '../comment-form-component/comment-form';
-import offers from '../../mocks/offers';
 import Map from '../map/map';
 import { useParams } from 'react-router-dom';
 import OffersList from './offers-list';
-
-const sampleReviews = [
-  {
-    avatar: 'img/avatar-max.jpg',
-    userName: 'Max',
-    rating: 80, // 80% для 4 из 5 звёзд (округлённо)
-    text: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-    date: new Date('2019-04-24'),
-  },
-  {
-    avatar: 'img/avatar-angelina.jpg',
-    userName: 'Angelina',
-    rating: 60,
-    text: 'норм.',
-    date: new Date('2019-05-15'),
-  },
-];
+import reviews from '../../mocks/reviews';
+import users from '../../mocks/user';
+import { useAppSelector } from '../../hooks';
 
 function Offer(): JSX.Element {
   const { id } = useParams<{ id: string }>();
-
+  const allOffers = useAppSelector((state) => state.app.offers);
   const offerId = Number(id);
 
-  const selectedOffer = offers.find(
-    (offer: { id: number }) => offer.id === offerId
-  );
-
-  const nearbyOffers = offers.filter(
-    (offer: { id: number }) => offer.id !== offerId
-  );
+  const selectedOffer = allOffers.find((item) => item.id === offerId);
+  const nearbyOffers = allOffers.filter((item) => item.id !== offerId);
 
   if (!selectedOffer) {
     return <div>Offer not found</div>;
@@ -209,9 +189,17 @@ function Offer(): JSX.Element {
                   </p>
                 </div>
               </div>
-              {/* Заменяем статичный список отзывов на компонент ReviewsList */}
-              <ReviewsList reviews={sampleReviews} />
-              {/* Форма отправки комментария */}
+              <ReviewsList
+                reviews={reviews
+                  .filter((review) => review.offerId === offerId)
+                  .map((review) => ({
+                    avatar: users[review.id - 1].avatar,
+                    userName: users[review.id - 1].userName,
+                    rating: review.rating,
+                    text: review.text,
+                    date: review.date,
+                  }))}
+              />
               <CommentForm />
             </div>
           </div>
@@ -221,7 +209,10 @@ function Offer(): JSX.Element {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              <OffersList offers={nearbyOffers} containerClassName="near-places__list" />
+              <OffersList
+                offers={nearbyOffers}
+                containerClassName="near-places__list"
+              />
             </div>
           </section>
 
