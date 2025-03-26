@@ -8,7 +8,7 @@ interface AppState {
 }
 
 const initialState: AppState = {
-  city: 'Amsterdam',
+  city: 'Paris',
   offers: offers,
 };
 

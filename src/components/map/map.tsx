@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { State } from '../../types/store';
+import { cities } from '../../mocks/cities';
 
 export interface MapOffer {
   title: string;
@@ -16,15 +19,16 @@ interface MapProps {
 
 const Map: React.FC<MapProps> = ({ offers }) => {
   const mapRef = useRef<HTMLDivElement>(null);
+  const selectedCity = useSelector((state: State) => state.app.city);
+  const cutyEntity = cities.find((c) => c.name === selectedCity);
 
   useEffect(() => {
     if (!mapRef.current) {
       return;
     }
 
-    // Создаем карту, центрируем её на Амстердаме
     const map = L.map(mapRef.current, {
-      center: [52.38333, 4.9],
+      center: cutyEntity ? [cutyEntity.latitude, cutyEntity.longitude] : [52.38333, 4.9],
       zoom: 12,
       layers: [
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -33,17 +37,15 @@ const Map: React.FC<MapProps> = ({ offers }) => {
       ],
     });
 
-    // Добавляем маркеры для каждого предложения
     offers.forEach((offer) => {
       const { latitude, longitude } = offer.location;
       L.marker([latitude, longitude]).addTo(map).bindPopup(offer.title);
     });
 
-    // Очистка карты при размонтировании
     return () => {
       map.remove();
     };
-  }, [offers]);
+  }, [cutyEntity, offers]);
 
   return (
     <div
