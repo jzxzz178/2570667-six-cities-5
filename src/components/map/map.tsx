@@ -28,8 +28,8 @@ const Map: React.FC<MapProps> = ({ offers }) => {
     }
 
     const map = L.map(mapRef.current, {
-      center: cutyEntity ? [cutyEntity.latitude, cutyEntity.longitude] : [52.38333, 4.9],
-      zoom: 12,
+      center: cutyEntity ? [cutyEntity.location.latitude, cutyEntity.location.longitude] : [52.38333, 4.9],
+      zoom: cutyEntity ? cutyEntity.location.zoom : 4,
       layers: [
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; OpenStreetMap contributors',
