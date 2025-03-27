@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import OfferCard from './offer-card';
-import { Offer } from '../../mocks/offers';
+import { Offer } from '../../types/offers';
 
 interface OffersListProps {
   offers: Offer[];

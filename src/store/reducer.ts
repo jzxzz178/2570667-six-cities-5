@@ -1,15 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
-import offers, { Offer } from '../mocks/offers';
-import { changeCity, fillOffers } from './action';
+import { Offer } from '../types/offers';
+import { changeCity, fillOffers, setOffersDataLoadingStatus } from './action';
 
 interface AppState {
   city: string;
   offers: Offer[];
+  isOffersDataLoading: boolean;
 }
 
 const initialState: AppState = {
   city: 'Paris',
-  offers: offers,
+  offers: [],
+  isOffersDataLoading: false,
 };
 
 const appReducer = createReducer(initialState, (builder) => {
@@ -19,6 +21,9 @@ const appReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fillOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 });
 
