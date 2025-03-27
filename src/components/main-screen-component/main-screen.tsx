@@ -1,12 +1,12 @@
 import Map from '../map/map';
 import { State } from '../../types/store';
 import OffersList from '../offer-component/offers-list';
-import CitiesList from '../cities-list';
+import CitiesList from './cities-list';
 import { cities } from '../../mocks/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/action';
 import { useState } from 'react';
-import SortingOptions, { SortOption } from '../sorting-options';
+import SortingOptions, { SortOption } from './sorting-options';
 
 function MainScreen(): JSX.Element {
   const selectedCity = useAppSelector((state: State) => state.app.city);
@@ -18,8 +18,6 @@ function MainScreen(): JSX.Element {
   const onCityChange = (city: string) => {
     dispatch(changeCity(city));
   };
-
-  // const [, setSortedOffers] = useState<Offer[]>(offers);
 
   const [selectedSort, setNewSort] = useState<SortOption>('popular');
   const [activeOfferId, setActiveOfferId] = useState<number | null>(null);

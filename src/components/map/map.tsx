@@ -3,7 +3,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { State } from '../../types/store';
 import { cities } from '../../mocks/cities';
-import { Offer } from '../../mocks/offers';
+import { Offer } from '../../types/offers';
 import { useAppSelector } from '../../hooks';
 
 interface MapProps {

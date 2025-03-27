@@ -5,17 +5,32 @@ import Login from '../components/login-component/login';
 import Favorites from '../components/favorites-component/favorites';
 import Offer from '../components/offer-component/offer';
 import PrivateRoute from '../components/private-route';
-// import Header from '../components/header';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { useEffect } from 'react';
+import { fetchOffers } from '../store/api-actions';
+import Spinner from '../components/loading-screen/loading-screen';
 
 function App(): JSX.Element {
   const isAuthenticated = true;
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffers());
+  }, [dispatch]);
+
+  const isOffersDataLoading = useAppSelector(
+    (state) => state.app.isOffersDataLoading
+  );
+  if (isOffersDataLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<MainScreen />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/header" element={<Header isAuthenticated userEmail='user@mail.com' favoriteCount={1}/>}/> */}
 
         <Route
           path="/favorites"

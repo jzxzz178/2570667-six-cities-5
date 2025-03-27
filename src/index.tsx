@@ -4,6 +4,9 @@ import App from './app/app';
 
 import { Provider } from 'react-redux';
 import store from './store';
+import { setOffersDataLoadingStatus } from './store/action';
+
+store.dispatch(setOffersDataLoadingStatus);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
