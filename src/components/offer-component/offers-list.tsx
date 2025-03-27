@@ -40,7 +40,7 @@ function OffersList({
           key={offer.id}
           id={offer.id}
           isPremium={offer.isPremium}
-          image={offer.image}
+          image={offer.previewImage}
           price={offer.price}
           title={offer.title}
           type={offer.type}

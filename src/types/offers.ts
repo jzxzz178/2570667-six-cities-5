@@ -9,7 +9,7 @@ export interface Offer {
     isPremium: boolean;
     isBookmarked: boolean;
     rating: number;
-    image: string;
+    previewImage: string;
     description: string;
     onMouseEnter: () => void;
     onMouseLeave: () => void;
