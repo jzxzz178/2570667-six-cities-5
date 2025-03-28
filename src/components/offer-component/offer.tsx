@@ -5,18 +5,33 @@ import { useParams } from 'react-router-dom';
 import OffersList from './offers-list';
 import reviews from '../../mocks/reviews';
 import users from '../../mocks/user';
-import { useAppSelector } from '../../hooks';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect, useState } from 'react';
+import { getOffer } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
+import Header from '../header';
 
 function Offer(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const { id } = useParams<{ id: string }>();
-  const allOffers = useAppSelector((state) => state.app.offers);
-  const offerId = Number(id);
 
-  const selectedOffer = allOffers.find((item) => item.id === offerId);
-  const nearbyOffers = allOffers.filter((item) => item.id !== offerId);
+  const selectedOffer = useAppSelector((state) => state.app.selectedOffer);
+  const isOfferLoading = useAppSelector((state) => state.app.isOffersDataLoading);
+  const nearbyOffers = useAppSelector((state) => state.app.nearbyOffers);
 
-  const [activeOfferId] = useState<number | null>(null);
+  useEffect(() => {
+    if (id) {
+      dispatch(getOffer(id));
+    }
+  }, [id, dispatch]);
+
+
+  const [activeOfferId] = useState<string | null>(null);
+
+  if (isOfferLoading) {
+    return <LoadingScreen />;
+  }
 
   if (!selectedOffer) {
     return <div>Offer not found</div>;
@@ -24,44 +39,7 @@ function Offer(): JSX.Element {
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width="81"
-                  height="41"
-                />
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--offer">
         <section className="offer">
@@ -194,7 +172,7 @@ function Offer(): JSX.Element {
               </div>
               <ReviewsList
                 reviews={reviews
-                  .filter((review) => review.offerId === offerId)
+                  .filter((review) => review.offerId === 1)
                   .map((review) => ({
                     avatar: users[review.id - 1].avatar,
                     userName: users[review.id - 1].userName,
@@ -213,7 +191,7 @@ function Offer(): JSX.Element {
             </h2>
             <div className="near-places__list places__list">
               <OffersList
-                offers={nearbyOffers}
+                offers={nearbyOffers!}
                 containerClassName="near-places__list"
               />
             </div>
@@ -228,7 +206,7 @@ function Offer(): JSX.Element {
               margin: '0 auto',
             }}
           >
-            <Map offers={nearbyOffers} activeOfferId={activeOfferId}/>
+            <Map offers={nearbyOffers!} activeOfferId={activeOfferId} />
           </div>
         </section>
       </main>
