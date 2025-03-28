@@ -3,9 +3,11 @@ import { AppDispatch, State } from '../types/store';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  fillNearbyOffers,
   fillOffers,
   requireAuthorization,
   setOffersDataLoadingStatus,
+  updateSelectedOffer,
   updateUserData,
 } from './action';
 import { Offer } from '../types/offers';
@@ -63,3 +65,29 @@ export const loginAction = createAsyncThunk<
     }
   }
 );
+
+export const getOffer = createAsyncThunk<
+  void,
+  string,
+  { dispatch: AppDispatch; state: State; extra: AxiosInstance }
+>('app/getOffer', async (id, { dispatch, extra: api }) => {
+  try {
+    const response = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+    dispatch(setOffersDataLoadingStatus(true));
+    dispatch(updateSelectedOffer(response.data));
+    dispatch(setOffersDataLoadingStatus(false));
+  } catch (e) {
+    Promise.reject(e);
+  }
+});
+
+export const fetchNearbyOffers = createAsyncThunk<
+  void,
+  string,
+  { dispatch: AppDispatch; state: State; extra: AxiosInstance }
+>('data/fetchOffers', async (id, { dispatch, extra: api }) => {
+  // dispatch(setOffersDataLoadingStatus(true));
+  const response = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+  // dispatch(setOffersDataLoadingStatus(false));
+  dispatch(fillNearbyOffers(response.data));
+});

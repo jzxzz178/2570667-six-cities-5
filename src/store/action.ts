@@ -18,3 +18,9 @@ export const requireAuthorization = createAction<AuthorizationStatus>(
 export const updateUserData = createAction<UserData>('app/updateUserData');
 
 export const logoutUser = createAction<void>('app/logoutUser');
+
+export const updateSelectedOffer = createAction<Offer>(
+  'app/updateSelectedOffer'
+);
+
+export const fillNearbyOffers = createAction<Offer[]>('app/fillNearbyOffers');

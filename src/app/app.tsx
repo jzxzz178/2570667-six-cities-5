@@ -7,7 +7,7 @@ import PrivateRoute from '../components/private-route';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { useEffect } from 'react';
 import { fetchOffers, checkAuthAction } from '../store/api-actions';
-import LoadintScreen from '../components/loading-screen/loading-screen';
+import LoadingScreen from '../components/loading-screen/loading-screen';
 import { AppRoute, AuthorizationStatus } from '../const';
 import AuthScreen from '../components/auth-screen/auth-screen';
 
@@ -29,7 +29,7 @@ function App(): JSX.Element {
     (state) => state.app.isOffersDataLoading
   );
   if (isOffersDataLoading || authStatus === AuthorizationStatus.Unknown) {
-    return <LoadintScreen />;
+    return <LoadingScreen />;
   }
 
   return (

@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Offer } from '../types/offers';
-import { changeCity, fillOffers, logoutUser, requireAuthorization, setOffersDataLoadingStatus, updateUserData } from './action';
+import { changeCity, fillNearbyOffers, fillOffers, logoutUser, requireAuthorization, setOffersDataLoadingStatus, updateSelectedOffer, updateUserData } from './action';
 import { AuthorizationStatus } from '../const';
 import { UserData } from '../types/user-data';
 import { dropToken } from '../services/token';
@@ -11,6 +11,8 @@ interface AppState {
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   userData?: UserData;
+  selectedOffer?: Offer;
+  nearbyOffers?: Offer[];
 }
 
 const initialState: AppState = {
@@ -41,6 +43,12 @@ const appReducer = createReducer(initialState, (builder) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;
       state.userData = undefined;
       dropToken();
+    })
+    .addCase(updateSelectedOffer, (state, action) => {
+      state.selectedOffer = action.payload;
+    })
+    .addCase(fillNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload;
     });
 });
 
