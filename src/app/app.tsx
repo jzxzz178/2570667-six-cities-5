@@ -1,7 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import MainScreen from '../components/main-screen-component/main-screen';
 import NotFoundPage from '../components/not-found-page';
-import AuthScreen from '../components/login-component/login';
 import Favorites from '../components/favorites-component/favorites';
 import Offer from '../components/offer-component/offer';
 import PrivateRoute from '../components/private-route';
@@ -10,6 +9,7 @@ import { useEffect } from 'react';
 import { fetchOffers, checkAuthAction } from '../store/api-actions';
 import LoadintScreen from '../components/loading-screen/loading-screen';
 import { AppRoute, AuthorizationStatus } from '../const';
+import AuthScreen from '../components/auth-screen/auth-screen';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();

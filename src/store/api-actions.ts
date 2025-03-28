@@ -46,8 +46,15 @@ export const loginAction = createAsyncThunk<
 >(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const response = await api.post<UserData>(APIRoute.Login, { email, password });
-    saveToken(response.data.token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    try {
+      const response = await api.post<UserData>(APIRoute.Login, {
+        email,
+        password,
+      });
+      saveToken(response.data.token);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch (e) {
+      // console.log(e);
+    }
   }
 );

@@ -16,12 +16,17 @@ function AuthScreen(): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(
-        loginAction({
-          login: loginRef.current.value,
-          password: passwordRef.current.value,
-        })
-      );
+      try {
+        dispatch(
+          loginAction({
+            login: loginRef.current.value,
+            password: passwordRef.current.value,
+          })
+        ).unwrap();
+        navigate(AppRoute.Root);
+      } catch (error) {
+        // console.error('Ошибка авторизации:', error);
+      }
     }
   };
 
@@ -64,7 +69,6 @@ function AuthScreen(): JSX.Element {
               </div>
               <button
                 className="login__submit form__submit button"
-                onClick={() => navigate(AppRoute.Root)}
                 type="submit"
               >
                 Sign in
