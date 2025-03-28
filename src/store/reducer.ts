@@ -2,12 +2,14 @@ import { createReducer } from '@reduxjs/toolkit';
 import { Offer } from '../types/offers';
 import { changeCity, fillOffers, requireAuthorization, setOffersDataLoadingStatus } from './action';
 import { AuthorizationStatus } from '../const';
+import { UserData } from '../types/user-data';
 
 interface AppState {
   city: string;
   offers: Offer[];
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
+  userData?: UserData;
 }
 
 const initialState: AppState = {

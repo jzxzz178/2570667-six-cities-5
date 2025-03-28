@@ -8,8 +8,9 @@ import {
   setOffersDataLoadingStatus,
 } from './action';
 import { Offer } from '../types/offers';
-import { AuthData, UserData } from '../types/auth-data';
+import { AuthData } from '../types/auth-data';
 import { saveToken } from '../services/token';
+import { UserData } from '../types/user-data';
 
 export const fetchOffers = createAsyncThunk<
   void,
