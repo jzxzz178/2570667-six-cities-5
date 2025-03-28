@@ -1,7 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import MainScreen from '../components/main-screen-component/main-screen';
 import NotFoundPage from '../components/not-found-page';
-import Login from '../components/login-component/login';
+import AuthScreen from '../components/login-component/login';
 import Favorites from '../components/favorites-component/favorites';
 import Offer from '../components/offer-component/offer';
 import PrivateRoute from '../components/private-route';
@@ -36,7 +36,7 @@ function App(): JSX.Element {
     <Router>
       <Routes>
         <Route path={AppRoute.Root} element={<MainScreen />} />
-        <Route path={AppRoute.Login} element={<Login />} />
+        <Route path={AppRoute.Login} element={<AuthScreen />} />
 
         <Route
           path={AppRoute.Favorites}

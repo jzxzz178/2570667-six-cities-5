@@ -5,7 +5,7 @@ import { loginAction } from '../../store/api-actions';
 import { AppRoute } from '../../const';
 import Header from '../header';
 
-function Login(): JSX.Element {
+function AuthScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -84,4 +84,4 @@ function Login(): JSX.Element {
   );
 }
 
-export default Login;
+export default AuthScreen;
