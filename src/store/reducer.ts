@@ -1,8 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Offer } from '../types/offers';
-import { changeCity, fillOffers, requireAuthorization, setOffersDataLoadingStatus } from './action';
+import { changeCity, fillOffers, logoutUser, requireAuthorization, setOffersDataLoadingStatus, updateUserData } from './action';
 import { AuthorizationStatus } from '../const';
 import { UserData } from '../types/user-data';
+import { dropToken } from '../services/token';
 
 interface AppState {
   city: string;
@@ -32,6 +33,14 @@ const appReducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(updateUserData, (state, action) => {
+      state.userData = action.payload;
+    })
+    .addCase(logoutUser, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.userData = undefined;
+      dropToken();
     });
 });
 

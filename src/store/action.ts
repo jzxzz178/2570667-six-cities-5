@@ -15,4 +15,6 @@ export const requireAuthorization = createAction<AuthorizationStatus>(
   'app/requireAuthorization'
 );
 
-export const updateUSerData = createAction<UserData>('app/updateUserData');
+export const updateUserData = createAction<UserData>('app/updateUserData');
+
+export const logoutUser = createAction<void>('app/logoutUser');

@@ -1,9 +1,17 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../const';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { logoutUser } from '../store/action';
 
 function Header(): JSX.Element {
   const authStatus = useAppSelector((state) => state.app.authorizationStatus);
+  const userData = useAppSelector((state) => state.app.userData);
+
+  const dispatch = useAppDispatch();
+  const onLogout = () => {
+    dispatch(logoutUser());
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -29,15 +37,23 @@ function Header(): JSX.Element {
                   <li className="header__nav-item user">
                     <Link
                       className="header__nav-link header__nav-link--profile"
-                      to="/favorites"
+                      to={AppRoute.Favorites}
                     >
-                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                        {userData?.avatarUrl && (
+                          <img
+                            className="header__avatar user__avatar"
+                            src={userData.avatarUrl}
+                            alt="User avatar"
+                            width="40"
+                            height="40"
+                          />
+                        )}
+                      </div>
                       <span className="header__user-name user__name">
-                        userEmail
+                        {userData?.name}
                       </span>
-                      <span className="header__favorite-count">
-                        favoriteCount
-                      </span>
+                      <span className="header__favorite-count">1</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">
@@ -45,7 +61,7 @@ function Header(): JSX.Element {
                       className="header__nav-link"
                       type="button"
                       onClick={() => {
-                        // Реализовать логику выхода (logout)
+                        onLogout();
                       }}
                     >
                       <span className="header__signout">Sign out</span>

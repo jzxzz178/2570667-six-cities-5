@@ -6,6 +6,7 @@ import {
   fillOffers,
   requireAuthorization,
   setOffersDataLoadingStatus,
+  updateUserData,
 } from './action';
 import { Offer } from '../types/offers';
 import { AuthData } from '../types/auth-data';
@@ -29,8 +30,10 @@ export const checkAuthAction = createAsyncThunk<
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
 >('user/checkAuth', async (_, { dispatch, extra: api }) => {
   try {
-    await api.get<AuthorizationStatus>(APIRoute.Login);
+    const response = await api.get<UserData>(APIRoute.Login);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    saveToken(response.data.token);
+    dispatch(updateUserData(response.data));
   } catch {
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   }
@@ -52,10 +55,11 @@ export const loginAction = createAsyncThunk<
         email,
         password,
       });
-      saveToken(response.data.token);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      saveToken(response.data.token);
+      dispatch(updateUserData(response.data));
     } catch (e) {
-      // console.log(e);
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   }
 );
