@@ -8,7 +8,7 @@ function Favorites(): JSX.Element {
   const dispatch = useAppDispatch();
   const allOffers = useAppSelector((state) => state.app.offers);
 
-  const favoriteOffers = allOffers.filter((offer) => offer.isBookmarked);
+  const favoriteOffers = allOffers.filter((offer) => offer.isFavorite);
 
   const handleClearFavorites = () => {
     const updatedOffers = allOffers.map((offer) => ({

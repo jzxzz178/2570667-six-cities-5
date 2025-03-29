@@ -7,14 +7,13 @@ export interface Offer {
     type: string;
     city: City;
     isPremium: boolean;
-    isBookmarked: boolean;
+    isFavorite: boolean;
     rating: number;
     previewImage: string;
     description: string;
-    onMouseEnter: () => void;
-    onMouseLeave: () => void;
     location: {
       latitude: number;
       longitude: number;
     };
+    images: string[];
 }

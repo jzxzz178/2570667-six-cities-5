@@ -49,7 +49,7 @@ function OfferCard({
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>
               <span className="visually-hidden">
-                {offer.isBookmarked ? 'In bookmarks' : 'To bookmarks'}
+                {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
               </span>
             </button>
           </div>
