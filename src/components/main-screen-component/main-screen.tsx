@@ -1,5 +1,5 @@
 import Map from '../map/map';
-import { State } from '../../types/store';
+import { State } from '../../store/store';
 import OffersList from '../offer-component/offers-list';
 import CitiesList from './cities-list';
 import { cities } from '../../mocks/cities';

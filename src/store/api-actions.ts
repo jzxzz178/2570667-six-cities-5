@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { AppDispatch, State } from '../types/store';
+import { AppDispatch, State } from './store';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
