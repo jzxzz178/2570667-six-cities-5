@@ -1,18 +1,26 @@
 import { Link } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../const';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { logoutUser } from '../store/action';
 
-interface HeaderProps {
-  isAuthenticated: boolean;
-  userEmail?: string;
-  favoriteCount?: number;
-}
+function Header(): JSX.Element {
+  const authStatus = useAppSelector((state) => state.app.authorizationStatus);
+  const userData = useAppSelector((state) => state.app.userData);
 
-function Header({ isAuthenticated, userEmail, favoriteCount }: HeaderProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const onLogout = () => {
+    dispatch(logoutUser());
+  };
+
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Link className="header__logo-link header__logo-link--active" to="/">
+            <Link
+              className="header__logo-link header__logo-link--active"
+              to="/"
+            >
               <img
                 className="header__logo"
                 src="img/logo.svg"
@@ -24,19 +32,37 @@ function Header({ isAuthenticated, userEmail, favoriteCount }: HeaderProps): JSX
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {isAuthenticated ? (
+              {authStatus === AuthorizationStatus.Auth ? (
                 <>
                   <li className="header__nav-item user">
-                    <Link className="header__nav-link header__nav-link--profile" to="/favorites">
-                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                      <span className="header__user-name user__name">{userEmail}</span>
-                      <span className="header__favorite-count">{favoriteCount}</span>
+                    <Link
+                      className="header__nav-link header__nav-link--profile"
+                      to={AppRoute.Favorites}
+                    >
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                        {userData?.avatarUrl && (
+                          <img
+                            className="header__avatar user__avatar"
+                            src={userData.avatarUrl}
+                            alt="User avatar"
+                            width="40"
+                            height="40"
+                          />
+                        )}
+                      </div>
+                      <span className="header__user-name user__name">
+                        {userData?.name}
+                      </span>
+                      <span className="header__favorite-count">1</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <button className="header__nav-link" type="button" onClick={() => {
-                      // Реализовать логику выхода (logout)
-                    }}
+                    <button
+                      className="header__nav-link"
+                      type="button"
+                      onClick={() => {
+                        onLogout();
+                      }}
                     >
                       <span className="header__signout">Sign out</span>
                     </button>
@@ -44,7 +70,7 @@ function Header({ isAuthenticated, userEmail, favoriteCount }: HeaderProps): JSX
                 </>
               ) : (
                 <li className="header__nav-item">
-                  <Link className="header__nav-link" to="/login">
+                  <Link className="header__nav-link" to={AppRoute.Login}>
                     <span className="header__signout">Sign in</span>
                   </Link>
                 </li>

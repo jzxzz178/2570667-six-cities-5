@@ -1,36 +1,34 @@
 import { Link } from 'react-router-dom';
+import { OfferPreview } from '../../types/offers';
 
 interface OfferCardProps {
-  id: number;
-  isPremium: boolean;
-  image: string;
-  price: number;
-  title: string;
-  type: string;
-  isBookmarked: boolean;
-  rating: number;
-  onMouseEnter: (id: number) => void;
+  offer: OfferPreview;
+  onMouseEnter: (id: string) => void;
   onMouseLeave: () => void;
 }
 
-function OfferCard(offerCard: OfferCardProps): JSX.Element {
+function OfferCard({
+  offer,
+  onMouseEnter,
+  onMouseLeave,
+}: OfferCardProps): JSX.Element {
   return (
     <div>
       <article
         className="cities__card place-card"
-        onMouseEnter={() => offerCard.onMouseEnter(offerCard.id)}
-        onMouseLeave={offerCard.onMouseLeave}
+        onMouseEnter={() => onMouseEnter(offer.id)}
+        onMouseLeave={onMouseLeave}
       >
-        {offerCard.isPremium && (
+        {offer.isPremium && (
           <div className="place-card__mark">
             <span>Premium</span>
           </div>
         )}
         <div className="cities__image-wrapper place-card__image-wrapper">
-          <Link to={`/offer/${offerCard.id}`}>
+          <Link to={`/offer/${offer.id}`}>
             <img
               className="place-card__image"
-              src={offerCard.image}
+              src={offer.previewImage}
               width="260"
               height="200"
               alt="Place image"
@@ -40,7 +38,7 @@ function OfferCard(offerCard: OfferCardProps): JSX.Element {
         <div className="place-card__info">
           <div className="place-card__price-wrapper">
             <div className="place-card__price">
-              <b className="place-card__price-value">&euro;{offerCard.price}</b>
+              <b className="place-card__price-value">&euro;{offer.price}</b>
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
             <button
@@ -51,23 +49,23 @@ function OfferCard(offerCard: OfferCardProps): JSX.Element {
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>
               <span className="visually-hidden">
-                {offerCard.isBookmarked ? 'In bookmarks' : 'To bookmarks'}
+                {offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}
               </span>
             </button>
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">
               <span
-                style={{ width: `${(offerCard.rating / 5) * 100}%` }}
+                style={{ width: `${(offer.rating / 5) * 100}%` }}
               >
               </span>
               <span className="visually-hidden">Rating</span>
             </div>
           </div>
           <h2 className="place-card__name">
-            <Link to={`/offer/${offerCard.id}`}>{offerCard.title}</Link>
+            <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
           </h2>
-          <p className="place-card__type">{offerCard.type}</p>
+          <p className="place-card__type">{offer.type}</p>
         </div>
       </article>
     </div>
