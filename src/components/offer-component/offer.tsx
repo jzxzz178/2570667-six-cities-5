@@ -3,11 +3,9 @@ import CommentForm from '../comment-form-component/comment-form';
 import Map from '../map/map';
 import { useParams } from 'react-router-dom';
 import OffersList from './offers-list';
-import reviews from '../../mocks/reviews';
-import users from '../../mocks/user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect, useState } from 'react';
-import { fetchNearbyOffers, getOffer } from '../../store/api-actions';
+import { fetchNearbyOffers, getOffer, fetchReviews } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../header';
 
@@ -17,6 +15,7 @@ function Offer(): JSX.Element {
   const { id } = useParams<{ id: string }>();
 
   const selectedOffer = useAppSelector((state) => state.app.selectedOffer);
+  const reviews = useAppSelector((state) => state.app.reviews);
   const isOfferLoading = useAppSelector(
     (state) => state.app.isOffersDataLoading
   );
@@ -26,6 +25,7 @@ function Offer(): JSX.Element {
     if (id) {
       dispatch(getOffer(id));
       dispatch(fetchNearbyOffers(id));
+      dispatch(fetchReviews(id));
     }
   }, [id, dispatch]);
 
@@ -144,17 +144,11 @@ function Offer(): JSX.Element {
                   {selectedOffer.description}
                 </div>
               </div>
-              <ReviewsList
-                reviews={reviews
-                  .filter((review) => review.offerId === 1)
-                  .map((review) => ({
-                    avatar: users[review.id - 1].avatar,
-                    userName: users[review.id - 1].userName,
-                    rating: review.rating,
-                    text: review.text,
-                    date: review.date,
-                  }))}
-              />
+              {reviews && reviews.length > 0 ? (
+                <ReviewsList reviews={reviews} />
+              ) : (
+                <p>Error while fetching reviews</p>
+              )}
               <CommentForm />
             </div>
           </div>

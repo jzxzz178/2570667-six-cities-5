@@ -1,9 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DetailedOffer, OfferPreview } from '../types/offers';
-import { changeCity, fillNearbyOffers, fillOffers, logoutUser, requireAuthorization, setOffersDataLoadingStatus, updateSelectedOffer, updateUserData } from './action';
+import { changeCity, fillNearbyOffers, fillOffers, fillReviewData, logoutUser, requireAuthorization, setOffersDataLoadingStatus, updateSelectedOffer, updateUserData } from './action';
 import { AuthorizationStatus } from '../const';
 import { UserData } from '../types/user-data';
 import { dropToken } from '../services/token';
+import { ReviewData } from '../types/review';
 
 interface AppState {
   city: string;
@@ -13,6 +14,7 @@ interface AppState {
   userData?: UserData;
   selectedOffer?: DetailedOffer;
   nearbyOffers?: OfferPreview[];
+  reviews?: ReviewData[];
 }
 
 const initialState: AppState = {
@@ -49,6 +51,9 @@ const appReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fillNearbyOffers, (state, action) => {
       state.nearbyOffers = action.payload;
+    })
+    .addCase(fillReviewData, (state, action) => {
+      state.reviews = action.payload;
     });
 });
 

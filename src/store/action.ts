@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { DetailedOffer, OfferPreview } from '../types/offers';
 import { AuthorizationStatus } from '../const';
 import { UserData } from '../types/user-data';
+import { ReviewData } from '../types/review';
 
 export const changeCity = createAction<string>('app/changeCity');
 
@@ -23,4 +24,8 @@ export const updateSelectedOffer = createAction<DetailedOffer>(
   'app/updateSelectedOffer'
 );
 
-export const fillNearbyOffers = createAction<OfferPreview[]>('app/fillNearbyOffers');
+export const fillNearbyOffers = createAction<OfferPreview[]>(
+  'app/fillNearbyOffers'
+);
+
+export const fillReviewData = createAction<ReviewData[]>('app/fillReviewData');

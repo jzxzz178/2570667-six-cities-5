@@ -5,6 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   fillNearbyOffers,
   fillOffers,
+  fillReviewData,
   requireAuthorization,
   setOffersDataLoadingStatus,
   updateSelectedOffer,
@@ -14,6 +15,7 @@ import { DetailedOffer, OfferPreview } from '../types/offers';
 import { AuthData } from '../types/auth-data';
 import { saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
+import { ReviewData } from '../types/review';
 
 export const fetchOffers = createAsyncThunk<
   void,
@@ -70,9 +72,9 @@ export const getOffer = createAsyncThunk<
   void,
   string,
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
->('app/getOffer', async (id, { dispatch, extra: api }) => {
+>('app/getOffer', async (offerId, { dispatch, extra: api }) => {
   try {
-    const response = await api.get<DetailedOffer>(`${APIRoute.Offers}/${id}`);
+    const response = await api.get<DetailedOffer>(`${APIRoute.Offers}/${offerId}`);
     dispatch(setOffersDataLoadingStatus(true));
     dispatch(updateSelectedOffer(response.data));
     dispatch(setOffersDataLoadingStatus(false));
@@ -85,9 +87,24 @@ export const fetchNearbyOffers = createAsyncThunk<
   void,
   string,
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
->('data/fetchOffers', async (id, { dispatch, extra: api }) => {
+>('data/fetchOffers', async (offerId, { dispatch, extra: api }) => {
   // dispatch(setOffersDataLoadingStatus(true));
-  const response = await api.get<OfferPreview[]>(`${APIRoute.Offers}/${id}/nearby`);
+  const response = await api.get<OfferPreview[]>(
+    `${APIRoute.Offers}/${offerId}/nearby`
+  );
   // dispatch(setOffersDataLoadingStatus(false));
   dispatch(fillNearbyOffers(response.data));
+});
+
+export const fetchReviews = createAsyncThunk<
+  void,
+  string,
+  { dispatch: AppDispatch; state: State; extra: AxiosInstance }
+>('data/getReview', async (offerId, { dispatch, extra: api }) => {
+  const response = await api.get<ReviewData[]>(`${APIRoute.Comments}/${offerId}`);
+  const transformedReviews = response.data.map((review) => ({
+    ...review,
+    date: new Date(review.date),
+  }));
+  dispatch(fillReviewData(transformedReviews));
 });

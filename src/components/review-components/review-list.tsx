@@ -1,8 +1,9 @@
 import React from 'react';
-import Review, { ReviewProps } from './review';
+import Review from './review';
+import { ReviewData } from '../../types/review';
 
 interface ReviewsListProps {
-  reviews: ReviewProps[];
+  reviews: ReviewData[];
 }
 
 const ReviewsList: React.FC<ReviewsListProps> = ({ reviews }) => (
@@ -12,7 +13,7 @@ const ReviewsList: React.FC<ReviewsListProps> = ({ reviews }) => (
     </h2>
     <ul className="reviews__list">
       {reviews.map((review) => (
-        <Review key={review.date.getTime()} {...review} />
+        <Review key={review.date.getTime()} review={review} />
       ))}
     </ul>
   </section>
