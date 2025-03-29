@@ -38,14 +38,7 @@ function OffersList({
       {offers.map((offer) => (
         <OfferCard
           key={offer.id}
-          id={offer.id}
-          isPremium={offer.isPremium}
-          image={offer.previewImage}
-          price={offer.price}
-          title={offer.title}
-          type={offer.type}
-          isBookmarked={offer.isBookmarked}
-          rating={offer.rating}
+          offer={offer}
           onMouseEnter={() => handleMouseEnter(offer.id)}
           onMouseLeave={handleMouseLeave}
         />
