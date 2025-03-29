@@ -13,7 +13,7 @@ const ReviewsList: React.FC<ReviewsListProps> = ({ reviews }) => (
     </h2>
     <ul className="reviews__list">
       {reviews.map((review) => (
-        <Review key={review.date.getTime()} review={review} />
+        <Review key={new Date(review.date).getTime()} review={review} />
       ))}
     </ul>
   </section>

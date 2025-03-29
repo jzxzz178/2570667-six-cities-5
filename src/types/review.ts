@@ -1,6 +1,6 @@
 export interface ReviewData {
   id: string;
-  date: Date;
+  date: string;
   user: {
     name: string;
     avatarUrl: string;

@@ -1,6 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DetailedOffer, OfferPreview } from '../types/offers';
-import { changeCity, fillNearbyOffers, fillOffers, fillReviewData, logoutUser, requireAuthorization, setOffersDataLoadingStatus, updateSelectedOffer, updateUserData } from './action';
+import {
+  addUserComment,
+  changeCity,
+  fillNearbyOffers,
+  fillOffers,
+  fillReviewData,
+  logoutUser,
+  requireAuthorization,
+  setOffersDataLoadingStatus,
+  updateSelectedOffer,
+  updateUserData,
+} from './action';
 import { AuthorizationStatus } from '../const';
 import { UserData } from '../types/user-data';
 import { dropToken } from '../services/token';
@@ -54,6 +65,13 @@ const appReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fillReviewData, (state, action) => {
       state.reviews = action.payload;
+    })
+    .addCase(addUserComment, (state, action) => {
+      if (state.reviews) {
+        state.reviews.push(action.payload);
+      } else {
+        state.reviews = [action.payload];
+      }
     });
 });
 

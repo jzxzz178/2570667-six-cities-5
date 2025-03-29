@@ -29,3 +29,5 @@ export const fillNearbyOffers = createAction<OfferPreview[]>(
 );
 
 export const fillReviewData = createAction<ReviewData[]>('app/fillReviewData');
+
+export const addUserComment = createAction<ReviewData>('app/addUserComment');

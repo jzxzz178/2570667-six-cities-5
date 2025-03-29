@@ -1,10 +1,32 @@
 import React, { useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { publishReview } from '../../store/api-actions';
+import { CommentData } from '../../types/user-comment';
 
-function CommentForm(): JSX.Element {
+interface CommentFormProps {
+  offerId: string;
+  onSubmit?: (rating: number, comment: string) => void;
+}
+
+function CommentForm({ offerId, onSubmit }: CommentFormProps): JSX.Element {
   // Состояние для хранения данных формы
-  const [rating, setRating] = useState<number | null>(null);
+  const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>('');
   const [isSubmitDisabled, setSubmitDisabled] = useState(true);
+  const dispatch = useAppDispatch();
+
+  const publichComment = () => {
+    const commentData: CommentData = {
+      offerId: offerId,
+      comment: review,
+      rating: rating,
+    };
+
+    dispatch(publishReview(commentData));
+    if (onSubmit && rating !== null) {
+      onSubmit(rating, review);
+    }
+  };
 
   const validateForm = (_rating: number | null, reviewText: string) => {
     const isValid = _rating !== null && reviewText.length >= 50;
@@ -27,9 +49,8 @@ function CommentForm(): JSX.Element {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // сброс состояния формы
-    setRating(null);
+    publichComment();
+    setRating(0);
     setReview('');
     setSubmitDisabled(true);
   };

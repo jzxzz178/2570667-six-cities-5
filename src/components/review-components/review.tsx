@@ -6,11 +6,11 @@ export interface ReviewProps {
 }
 
 const Review: React.FC<ReviewProps> = ({ review }) => {
-  const formattedDate = new Intl.DateTimeFormat('ru', {
+  const formattedDate = new Intl.DateTimeFormat('en', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  }).format(review.date);
+  }).format(new Date(review.date));
 
   return (
     <li className="reviews__item">

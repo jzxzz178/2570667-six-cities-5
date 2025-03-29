@@ -149,7 +149,7 @@ function Offer(): JSX.Element {
               ) : (
                 <p>Error while fetching reviews</p>
               )}
-              <CommentForm />
+              <CommentForm offerId={selectedOffer.id} />
             </div>
           </div>
 
