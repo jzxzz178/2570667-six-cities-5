@@ -7,7 +7,7 @@ import reviews from '../../mocks/reviews';
 import users from '../../mocks/user';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect, useState } from 'react';
-import { getOffer } from '../../store/api-actions';
+import { fetchNearbyOffers, getOffer } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../header';
 
@@ -17,17 +17,19 @@ function Offer(): JSX.Element {
   const { id } = useParams<{ id: string }>();
 
   const selectedOffer = useAppSelector((state) => state.app.selectedOffer);
-  const isOfferLoading = useAppSelector((state) => state.app.isOffersDataLoading);
+  const isOfferLoading = useAppSelector(
+    (state) => state.app.isOffersDataLoading
+  );
   const nearbyOffers = useAppSelector((state) => state.app.nearbyOffers);
 
   useEffect(() => {
     if (id) {
       dispatch(getOffer(id));
+      dispatch(fetchNearbyOffers(id));
     }
   }, [id, dispatch]);
 
-
-  const [activeOfferId] = useState<string | null>(null);
+  const [activeOfferId] = useState<number | null>(null);
 
   if (isOfferLoading) {
     return <LoadingScreen />;
@@ -185,29 +187,37 @@ function Offer(): JSX.Element {
             </div>
           </div>
 
-          <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
-            <div className="near-places__list places__list">
-              <OffersList
-                offers={nearbyOffers!}
-                containerClassName="near-places__list"
-              />
-            </div>
-          </section>
+          {nearbyOffers ? (
+            <section className="near-places places">
+              <h2 className="near-places__title">
+                Other places in the neighbourhood
+              </h2>
+              <div className="near-places__list places__list">
+                <OffersList
+                  offers={nearbyOffers}
+                  containerClassName="near-places__list"
+                />
+              </div>
+            </section>
+          ) : (
+            <p></p>
+          )}
 
-          <div
-            className="offer__map map"
-            style={{
-              width: '100%',
-              maxWidth: '600px',
-              height: '400px',
-              margin: '0 auto',
-            }}
-          >
-            <Map offers={nearbyOffers!} activeOfferId={activeOfferId} />
-          </div>
+          {nearbyOffers ? (
+            <div
+              className="offer__map map"
+              style={{
+                width: '100%',
+                maxWidth: '600px',
+                height: '400px',
+                margin: '0 auto',
+              }}
+            >
+              <Map offers={nearbyOffers} activeOfferId={activeOfferId} />
+            </div>
+          ) : (
+            <p>No map</p>
+          )}
         </section>
       </main>
     </div>
