@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import OfferCard from './offer-card';
-import { Offer } from '../../types/offers';
+import { OfferPreview } from '../../types/offers';
 
 interface OffersListProps {
-  offers: Offer[];
+  offers: OfferPreview[];
   containerClassName?: string;
-  onCardMouseEnter?: (id: number) => void;
+  onCardMouseEnter?: (id: string) => void;
   onCardMouseLeave?: () => void;
 }
 
@@ -15,9 +15,9 @@ function OffersList({
   onCardMouseEnter,
   onCardMouseLeave,
 }: OffersListProps): JSX.Element {
-  const [, setActiveOfferId] = useState<number | null>(null);
+  const [, setActiveOfferId] = useState<string | null>(null);
 
-  const handleMouseEnter = (id: number) => {
+  const handleMouseEnter = (id: string) => {
     setActiveOfferId(id);
     if (onCardMouseEnter) {
       onCardMouseEnter(id);

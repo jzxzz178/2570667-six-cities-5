@@ -29,7 +29,7 @@ function Offer(): JSX.Element {
     }
   }, [id, dispatch]);
 
-  const [activeOfferId] = useState<number | null>(null);
+  const [activeOfferId] = useState<string | null>(null);
 
   if (isOfferLoading) {
     return <LoadingScreen />;

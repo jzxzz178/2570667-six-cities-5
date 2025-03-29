@@ -10,7 +10,7 @@ import {
   updateSelectedOffer,
   updateUserData,
 } from './action';
-import { Offer } from '../types/offers';
+import { DetailedOffer, OfferPreview } from '../types/offers';
 import { AuthData } from '../types/auth-data';
 import { saveToken } from '../services/token';
 import { UserData } from '../types/user-data';
@@ -21,7 +21,7 @@ export const fetchOffers = createAsyncThunk<
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
 >('data/fetchOffers', async (_, { dispatch, extra: api }) => {
   dispatch(setOffersDataLoadingStatus(true));
-  const response = await api.get<Offer[]>(APIRoute.Offers);
+  const response = await api.get<OfferPreview[]>(APIRoute.Offers);
   dispatch(setOffersDataLoadingStatus(false));
   dispatch(fillOffers(response.data));
 });
@@ -72,7 +72,7 @@ export const getOffer = createAsyncThunk<
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
 >('app/getOffer', async (id, { dispatch, extra: api }) => {
   try {
-    const response = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+    const response = await api.get<DetailedOffer>(`${APIRoute.Offers}/${id}`);
     dispatch(setOffersDataLoadingStatus(true));
     dispatch(updateSelectedOffer(response.data));
     dispatch(setOffersDataLoadingStatus(false));
@@ -87,7 +87,7 @@ export const fetchNearbyOffers = createAsyncThunk<
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
 >('data/fetchOffers', async (id, { dispatch, extra: api }) => {
   // dispatch(setOffersDataLoadingStatus(true));
-  const response = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+  const response = await api.get<OfferPreview[]>(`${APIRoute.Offers}/${id}/nearby`);
   // dispatch(setOffersDataLoadingStatus(false));
   dispatch(fillNearbyOffers(response.data));
 });

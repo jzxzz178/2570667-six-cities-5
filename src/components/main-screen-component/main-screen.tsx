@@ -21,7 +21,7 @@ function MainScreen(): JSX.Element {
   };
 
   const [selectedSort, setNewSort] = useState<SortOption>('popular');
-  const [activeOfferId, setActiveOfferId] = useState<number | null>(null);
+  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   const handleSortChange = (option: SortOption) => {
     setNewSort(option);

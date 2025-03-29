@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Offer } from '../types/offers';
+import { DetailedOffer, OfferPreview } from '../types/offers';
 import { changeCity, fillNearbyOffers, fillOffers, logoutUser, requireAuthorization, setOffersDataLoadingStatus, updateSelectedOffer, updateUserData } from './action';
 import { AuthorizationStatus } from '../const';
 import { UserData } from '../types/user-data';
@@ -7,12 +7,12 @@ import { dropToken } from '../services/token';
 
 interface AppState {
   city: string;
-  offers: Offer[];
+  offers: OfferPreview[];
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   userData?: UserData;
-  selectedOffer?: Offer;
-  nearbyOffers?: Offer[];
+  selectedOffer?: DetailedOffer;
+  nearbyOffers?: OfferPreview[];
 }
 
 const initialState: AppState = {

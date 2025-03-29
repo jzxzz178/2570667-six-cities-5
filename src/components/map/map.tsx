@@ -3,12 +3,12 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { State } from '../../types/store';
 import { cities } from '../../mocks/cities';
-import { Offer } from '../../types/offers';
+import { BaseOffer } from '../../types/offers';
 import { useAppSelector } from '../../hooks';
 
 interface MapProps {
-  offers: Offer[];
-  activeOfferId: number | null;
+  offers: BaseOffer[];
+  activeOfferId: string | null;
 }
 
 const Map: React.FC<MapProps> = ({ offers, activeOfferId }) => {

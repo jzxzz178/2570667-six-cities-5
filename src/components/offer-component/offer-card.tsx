@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Offer } from '../../types/offers';
+import { OfferPreview } from '../../types/offers';
 
 interface OfferCardProps {
-  offer: Offer;
-  onMouseEnter: (id: number) => void;
+  offer: OfferPreview;
+  onMouseEnter: (id: string) => void;
   onMouseLeave: () => void;
 }
 
